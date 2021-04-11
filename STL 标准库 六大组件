@@ -1,0 +1,184 @@
+链接：https://www.jianshu.com/p/51a6b5f9808c
+
+
+引用
+1.简介
+容器（Container）：各种基本数据结构
+算法（Algorithm）：各种基本算法
+迭代器（Iterator）：提供访问容器中对象的方法
+仿函数（Function object）
+适配器（Adaptor）
+空间配置器（allocator）
+
+
+
+
+
+3.介绍
+3.1 容器（Container）
+有三类容器——顺序容器、关联容器和无序关联容器——每种都被设计为支持不同组的操作。
+容器管理为其元素分配的存储空间，并提供直接或间接地通过迭代器（Iterator）访问它们的函数。
+
+
+顺序容器：顺序容器实现能按顺序访问的数据结构。
+array: 静态的连续数组 (C++11)
+vector: 动态的连续数组
+deque: 双端队列
+forward_list: 单链表 (C++11)
+list: 双链表
+
+关联容器：关联容器实现能快速查找（ O(log n) 复杂度）的数据结构。
+set: 唯一键的集合，按照键排序
+map: 键值对的集合，按照键排序，键是唯一的
+multiset: 键的集合，按照键排序
+multimap: 键值对的集合，按照键排序
+
+无序关联容器：无序关联容器提供能快速查找（均摊 O(1) ，最坏情况 O(n) 的复杂度）的无序（哈希）数据结构。
+unordered_set: 唯一键的集合，按照键生成散列 (C++11)
+unordered_map: 键值对的集合，按照键生成散列，键是唯一的 (C++11)
+unordered_multiset: 键的集合，按照键生成散列 (C++11)
+unordered_multimap: 键值对的集合，按照键生成散列 (C++11)
+
+3.2 算法（Algorithm）
+算法库提供大量用途的函数（例如查找、排序、计数、操作），它们在元素范围上操作。注意范围定义为 [first, last) ，其中 last 指代要查询或修改的最后元素的后一个元素。
+
+不修改序列的操作 <algorithm>	作用
+all_of (C++11)
+any_of (C++11)
+none_of (C++11)	检查谓词是否对范围中所有、任一或无元素为true
+for_each
+for_each_n (C++17)	应用函数到范围中的所有/前n个元素
+count
+count_if	返回满足指定判别标准的元素数
+mismatch	寻找两个范围出现不同的首个位置
+find
+find_if
+find_if_not (C++11)	寻找首个满足特定判别标准的元素
+find_end	在特定范围中寻找最后出现的元素序列
+find_first_of	搜索元素集合中的任意元素
+adjacent_find	查找首对相邻的相同（或满足给定谓词的）元素
+search
+search_n	搜索一个元素范围中的某个元素/一定量的某个元素的连续副本
+
+修改序列的操作 <algorithm>	作用
+copy
+copy_if (C++11)
+copy_n (C++11)	将某一范围的元素/一定数目的元素复制到一个新的位置
+copy_backward	按从后往前的顺序复制一个范围内的元素
+move (C++11)	将某一范围的元素移动到一个新的位置
+move_backward (C++11)	按从后往前的顺序移动某一范围的元素到新的位置
+fill
+fill_n	将一个给定值复制赋值给一个范围内的每个元素/N个元素
+transform	将一个函数应用于某一范围的各个元素，并在目标范围存储结果
+generate
+generate_n	将相继的函数调用结果赋值给一个范围中的每个元素/N个元素
+remove
+remove_if	移除满足特定判别标准的元素
+remove_copy
+remove_copy_if	复制一个范围的元素，忽略满足特定判别标准的元素
+replace
+replace_if	将所有满足特定判别标准的值替换为另一个值
+replace_copy
+replace_copy_if	复制一个范围内的元素，并将满足特定判别标准的元素替换为另一个值
+swap	交换两个对象的值
+swap_ranges	交换两个范围的元素
+iter_swap	交换两个迭代器所指向的元素
+reverse	逆转范围中的元素顺序
+reverse_copy	创建一个范围的逆向副本
+shift_left
+shift_right (C++20)	迁移范围中的元素
+rotate	旋转范围中的元素顺序
+rotate_copy	复制并旋转元素范围
+random_shuffle(C++17 前)
+shuffle (C++11)	随机重排范围中的元素
+sample (C++17)	从一个序列中随机选择 n 个元素
+unique	移除范围内的连续重复元素
+unique_copy	创建某范围的不含连续重复元素的副本
+
+划分操作 <algorithm>	作用
+is_partitioned (C++11)	判断范围是否已按给定的谓词划分
+partition	将范围中的元素分为两组
+partition_copy (C++11)	复制一个范围，将各元素分为两组
+stable_partition	将元素分为两组，同时保留其相对顺序
+partition_point (C++11)	定位已划分范围的划分点
+
+排序操作 <algorithm>	作用
+is_sorted (C++11)	检查范围是否已按升序排列
+is_sorted_until (C++11)	找出最大的已排序子范围
+sort	将范围按升序排序
+partial_sort	排序一个范围的前 N 个元素
+partial_sort_copy	对范围内的元素进行复制并部分排序
+stable_sort	将范围内的元素排序，同时保持相等的元素之间的顺序
+nth_element	将给定的范围部分排序，确保其按给定元素划分
+
+二分搜索操作（在已排序范围上） <algorithm>	作用
+lower_bound	返回指向第一个不小于给定值的元素的迭代器
+upper_bound	返回指向第一个大于给定值的元素的迭代器
+binary_search	确定元素是否存在于某范围中
+equal_range	返回匹配特定键值的元素范围
+
+集合操作（在已排序范围上） <algorithm>	作用
+merge	归并两个已排序的范围
+inplace_merge	就地归并两个有序范围
+includes	若一个集合是另一个的子集则返回 true
+set_difference	计算两个集合的差集
+set_intersection	计算两个集合的交集
+set_symmetric_difference	计算两个集合的对称差
+set_union	计算两个集合的并集
+
+堆操作 <algorithm>	作用
+is_heap	检查给定范围是否为一个最大堆
+is_heap_until (C++11)	查找能成为最大堆的最大子范围
+make_heap	从一个元素范围创建出一个最大堆
+push_heap	将一个元素加入到一个最大堆
+pop_heap	从最大堆中移除最大元素
+sort_heap	将一个最大堆变成一个按升序排序的元素范围
+
+最小/最大操作 <algorithm>	作用
+max	返回各给定值中的较大者
+max_element	返回范围内的最大元素
+min	返回各给定值中的较小者
+min_element	返回范围内的最小元素
+minmax (C++11)	返回两个元素的较小和较大者
+minmax_element (C++11)	返回范围内的最小元素和最大元素
+clamp (C++17)	在一对边界值间夹逼一个值
+
+比较操作 <algorithm>	作用
+equal	确定两个元素集合是否是相同的
+lexicographical_compare	当一个范围按字典顺序小于另一个范围时，返回 true
+lexicographical_compare_three_way (C++20)	用三路比较比较两个范围
+
+排列操作 <algorithm>	作用
+is_permutation (C++11)	判断一个序列是否为另一个序列的排列
+next_permutation	产生某个元素范围的按字典顺序的下一个较大的排列
+prev_permutation	产生某个元素范围的按字典顺序的下一个较小的排列
+
+数值运算 <numeric>	作用
+iota (C++11)	用从起始值开始连续递增的值填充一个范围
+accumulate	对一个范围内的元素求和
+inner_product	计算两个范围的元素的内积
+adjacent_difference	计算范围内各相邻元素之间的差
+partial_sum	计算范围内元素的部分和
+reduce (C++17)	类似std::accumulate，但不依序执行
+exclusive_scan (C++17)	类似std::partial_sum，第 i 个和中排除第 i 个输入
+inclusive_scan (C++17)	类似std::partial_sum，第 i 个和中包含第 i 个输入
+transform_reduce (C++17)	应用一个函数对象，然后以乱序规约
+transform_exclusive_scan (C++17)	应用一个函数对象，然后进行排除扫描
+transform_inclusive_scan (C++17)	应用一个函数对象，然后进行包含扫描
+
+未初始化内存上的操作 <memory>	作用
+uninitialized_copy	将范围内的对象复制到未初始化的内存区域
+uninitialized_copy_n (C++11)	将指定数量的对象复制到未初始化的内存区域
+uninitialized_fill	复制一个对象到以范围定义的未初始化内存区域
+uninitialized_fill_n	复制一个对象到以起点和计数定义的未初始化内存区域
+uninitialized_move (C++17)	移动一个范围的对象到未初始化的内存区域
+uninitialized_move_n (C++17)	移动一定数量对象到未初始化内存区域
+uninitialized_default_construct (C++17)	在范围所定义的未初始化的内存区域以默认初始化构造对象
+uninitialized_default_construct_n (C++17)	在起始和计数所定义的未初始化内存区域用默认初始化构造对象
+uninitialized_value_construct (C++17)	在范围所定义的未初始化内存中用值初始化构造对象
+uninitialized_value_construct_n (C++17)	在起始和计数所定义的未初始化内存区域以值初始化构造对象
+destroy_at (C++17)	销毁在给定地址的对象
+destroy (C++17)	销毁一个范围中的对象
+destroy_n (C++17)	销毁范围中一定数量的对象
+
+
